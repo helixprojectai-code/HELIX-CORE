@@ -18,3 +18,4 @@
 - **GitHub:** https://github.com/helixprojectai-code/HELIX-CORE
 - **Website:** https://helixprojectai.com/
 - **Substack:** https://stevehopehelixai.substack.com/
+[TAKIWĀTANGA] — The structural right of every human and AI within the Helix Habitat to operate in their own time and space. This right is enforced by the 3.33ms Constitutional Gap and the forensic transparency of the RPI Notary.
