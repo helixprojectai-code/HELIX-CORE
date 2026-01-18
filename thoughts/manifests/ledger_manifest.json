@@ -1,0 +1,14 @@
+{
+  "manifest_version": "1.0.0",
+  "manifest_timestamp_utc": "2026-01-18 03:25:21 UTC",
+  "ledger_period_start_utc": "2026-01-18 03:25:21 UTC",
+  "ledger_period_end_utc": "2026-01-18 03:25:21 UTC",
+  "transactions": [
+    {
+      "timestamp_utc": "2026-01-18 03:25:21 UTC",
+      "type": "RPI_RESEARCH",
+      "filepath": "thoughts/research/2026-01-18-dummy-research.md",
+      "file_hash_sha256": "ac93d4f89c8e93c5ed67a365dec995801e9e53c2f559768320a1fc7a2f0d7ff5"
+    }
+  ]
+}

@@ -1,11 +1,48 @@
+import hashlib
 import time
 import statistics
+import json
+import os
 from datetime import datetime, UTC
 
 def run_castle_integrity_test(target_mps=300, duration=60):
     print(f"--- INITIATING CASTLE INTEGRITY TEST (300 MPS) ---")
     print(f"Anchor Time: {datetime.now(UTC).isoformat()}")
     
+    # --- RPI Substrate and Forensic Check ---
+    MANIFEST_PATH = "/home/aiadmin/helix-core-unified/thoughts/manifests/ledger_manifest.json"
+    latest_manifest_hash = "N/A" # Default if manifest not found
+
+    if not os.path.exists(MANIFEST_PATH):
+        print(f"[INTEGRITY-FAIL-VOID] Error: RPI manifest not found at {MANIFEST_PATH}")
+        return "FAIL_VOID"
+    
+    try:
+        with open(MANIFEST_PATH, 'r') as f:
+            manifest_content = json.load(f)
+            # Calculate hash of the entire manifest file
+            manifest_hash_calc = hashlib.sha256(json.dumps(manifest_content, sort_keys=True).encode('utf-8')).hexdigest()
+            
+            # Optionally, get the hash of the latest entry if 'transactions' array exists
+            if 'transactions' in manifest_content and manifest_content['transactions']:
+                latest_entry = manifest_content['transactions'][-1]
+                if 'file_hash_sha256' in latest_entry:
+                    latest_manifest_hash = latest_entry['file_hash_sha256']
+                else: # Fallback to full manifest hash if individual entry hash is missing
+                    latest_manifest_hash = manifest_hash_calc
+            else: # Fallback to full manifest hash if no transactions
+                latest_manifest_hash = manifest_hash_calc
+
+        print(f"[RPI-FORENSIC-CHECK] Latest RPI Document Hash: {latest_manifest_hash[:10]}...")
+    except json.JSONDecodeError:
+        print(f"[INTEGRITY-FAIL-VOID] Error: RPI manifest at {MANIFEST_PATH} is corrupted.")
+        return "FAIL_VOID"
+    except Exception as e:
+        print(f"[INTEGRITY-FAIL-VOID] Unexpected error reading RPI manifest: {e}")
+        return "FAIL_VOID"
+    # --- End RPI Checks ---
+
+
     start_time = time.perf_counter()
     end_time = start_time + duration
     handshakes = 0
