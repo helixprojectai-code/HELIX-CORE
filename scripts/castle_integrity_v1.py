@@ -3,7 +3,104 @@ import time
 import statistics
 import json
 import os
-from datetime import datetime, UTC
+from datetime import datetime, UTC, timezone
+
+def calculate_file_hash(filepath):
+    """Calculates the SHA256 hash of a file."""
+    if not os.path.exists(filepath):
+        return None
+    hasher = hashlib.sha256()
+    with open(filepath, 'rb') as f:
+        while True:
+            chunk = f.read(4096)
+            if not chunk:
+                break
+            hasher.update(chunk)
+    return hasher.hexdigest()
+
+def check_permission_coherence(manifest_path, permission_file_path):
+    """
+    Checks for permission coherence between the ledger manifest and
+    the current vault_permissions.json.
+    """
+    print("""
+--- Running Permission Coherence Check ---
+""")
+    if not os.path.exists(manifest_path):
+        print(f"  Error: Manifest file not found at {manifest_path}")
+        return False
+    if not os.path.exists(permission_file_path):
+        print(f"  Error: Permission file not found at {permission_file_path}")
+        return False
+
+    with open(manifest_path, 'r') as f:
+        manifest = json.load(f)
+
+    latest_braid_state = None
+    for transaction in reversed(manifest.get('transactions', [])):
+        if transaction.get('type') == 'PERMISSION_BRAID_STATE' and \
+           transaction.get('filepath') == permission_file_path:
+            latest_braid_state = transaction
+            break
+
+    if not latest_braid_state:
+        print("  Warning: No 'PERMISSION_BRAID_STATE' entry found in manifest.")
+        print("  Permission Coherence: UNKNOWN (No baseline for comparison)")
+        return False
+
+    expected_hash = latest_braid_state.get('file_hash_sha256')
+    current_hash = calculate_file_hash(permission_file_path)
+
+    print(f"  Latest Braid State in Manifest (Hash): {expected_hash[:10]}...")
+    print(f"  Current vault_permissions.json Hash: {current_hash[:10]}...")
+
+    if expected_hash == current_hash:
+        print("  Permission Coherence: PASSED. Current vault_permissions.json matches latest anchored state.")
+        return True
+    else:
+        print("  Permission Coherence: FAILED. Current vault_permissions.json DOES NOT match latest anchored state.")
+        print("  Discrepancy detected: Permissions file may have been modified without anchoring.")
+        return False
+
+def check_temporal_blinding(permission_file_path):
+    """
+    Checks for expired 'valid_until' timestamps in the current
+    vault_permissions.json.
+    """
+    print("""
+--- Running Temporal Blinding Check ---
+""")
+    if not os.path.exists(permission_file_path):
+        print(f"  Error: Permission file not found at {permission_file_path}")
+        return False
+
+    with open(permission_file_path, 'r') as f:
+        permissions_data = json.load(f)
+
+    now_utc = datetime.now(timezone.utc)
+    expired_permissions = []
+
+    for permission in permissions_data.get('permissions', []):
+        valid_until_str = permission.get('valid_until')
+        if valid_until_str:
+            try:
+                if valid_until_str.endswith('Z'):
+                    valid_until_str = valid_until_str.replace('Z', '+00:00')
+                valid_until_dt = datetime.fromisoformat(valid_until_str)
+                if valid_until_dt < now_utc:
+                    expired_permissions.append(permission)
+            except ValueError:
+                print(f"  Warning: Invalid 'valid_until' format for hash {permission.get('document_hash')}: {valid_until_str}")
+
+    if expired_permissions:
+        print("  Temporal Blinding Check: DETECTED EXPIRED PERMISSIONS.")
+        for p in expired_permissions:
+            print(f"    - Document Hash: {p.get('document_hash')[:10]}..., Owner: {p.get('owner_id')}, Expired On: {p.get('valid_until')}")
+        print("  Action required: These permissions should be formally revoked or updated.")
+        return False
+    else:
+        print("  Temporal Blinding Check: PASSED. No expired permissions found.")
+        return True
 
 def run_castle_integrity_test(target_mps=300, duration=60):
     print(f"--- INITIATING CASTLE INTEGRITY TEST (300 MPS) ---")
@@ -42,6 +139,15 @@ def run_castle_integrity_test(target_mps=300, duration=60):
         return "FAIL_VOID"
     # --- End RPI Checks ---
 
+    # --- Permission Coherence and Temporal Blinding Checks ---
+    PERMISSION_FILE_PATH = "/home/aiadmin/helix-core-unified/thoughts/vault_permissions.json"
+    permission_coherence_passed = check_permission_coherence(MANIFEST_PATH, PERMISSION_FILE_PATH)
+    temporal_blinding_passed = check_temporal_blinding(PERMISSION_FILE_PATH)
+
+    if not (permission_coherence_passed and temporal_blinding_passed):
+        print("[INTEGRITY-FAIL-PERMISSIONS] Permission Coherence or Temporal Blinding Failed.")
+        return "FAIL_PERMISSIONS"
+    # --- End Permission Checks ---
 
     start_time = time.perf_counter()
     end_time = start_time + duration

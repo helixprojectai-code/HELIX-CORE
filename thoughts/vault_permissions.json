@@ -1,0 +1,17 @@
+{
+  "permissions": [
+    {
+      "document_hash": "af79f4de45139f69301773636062e0b107901d83cbf99d110ef496ef5b69d936",
+      "owner_id": "Steve-Quebec-Node-001",
+      "delegate_id": null,
+      "access_level": "ALLOW",
+      "valid_until": null,
+      "jurisdiction": "Quebec-Node",
+      "reason": "Migrated from initial verification",
+      "last_modified_utc": "2026-01-18T14:19:12Z",
+      "modified_by_id": "GOOSE-CORE"
+    }
+  ],
+  "schema_version": "1.1.0",
+  "last_audit_anchor_utc": "2026-01-18 14:19:29 UTC"
+}

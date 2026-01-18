@@ -40,3 +40,9 @@ python3 /home/aiadmin/helix-core-unified/scripts/castle_integrity_v1.py
 
 ## 5. Drift Codes
 - **DRIFT-R:** Violation of the Research Layer (Modifying code without an anchored RPI document). If detected, the habitat must be rolled back to the last anchored state.
+
+## 6. Vault Maintenance
+
+### 6.1 Integrity Failure Response
+
+If `castle_integrity_v1.py` returns `FAIL_PERMISSIONS`, the operator must immediately audit `vault_permissions.json` for expired entries or unauthorized modifications. This indicates a discrepancy between the anchored Permission Braid state and the current file, or the presence of expired temporal permissions that require formal revocation or update.
