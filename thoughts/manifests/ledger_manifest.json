@@ -1,8 +1,8 @@
 {
   "manifest_version": "1.0.0",
-  "manifest_timestamp_utc": "2026-01-18 14:19:29 UTC",
+  "manifest_timestamp_utc": "2026-01-19 12:24:35 UTC",
   "ledger_period_start_utc": "2026-01-18 03:25:21 UTC",
-  "ledger_period_end_utc": "2026-01-18 14:19:29 UTC",
+  "ledger_period_end_utc": "2026-01-19 12:24:35 UTC",
   "transactions": [
     {
       "timestamp_utc": "2026-01-18 03:25:21 UTC",
@@ -33,6 +33,12 @@
       "type": "PERMISSION_BRAID_STATE",
       "filepath": "/home/aiadmin/helix-core-unified/thoughts/vault_permissions.json",
       "file_hash_sha256": "d1d54d5f4dd971df0833459c6343478919771c3583681ce255034759f137d347"
+    },
+    {
+      "timestamp_utc": "2026-01-19 12:24:35 UTC",
+      "type": "PERMISSION_BRAID_STATE",
+      "filepath": "/home/aiadmin/helix-core-unified/thoughts/research/2026-01-19-Owl-Perspective-v1.1.1.md",
+      "file_hash_sha256": "2dd9f8e4a39bd3fd6b681f55f85b1057d65e59116d2a217b2815f071b4e20d92"
     }
   ]
 }

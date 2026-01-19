@@ -1,3 +1,19 @@
+### **Section 1: Project Introduction — The Grounded Fortress**
+
+Helix-Core is the technical realization of a 41-year architectural intuition. Conceived in 1985 as a "Castle in the Air"—a theoretical way to govern intelligence amidst political and social chaos—it has been brought to the ground in 2026 as a functional, sovereign AI habitat. The project stops treating AI as an autonomous "Oracle" to be worshipped or feared and starts treating it as a "Civic Infrastructure" to be governed. 
+
+**[FACT]** Helix-Core v1.1.1 is specification-complete, operating on a $600/month "constitutional float" that serves as an empirical counterexample to the multi-billion dollar capital requirements of frontier labs. 
+
+**[REASONED]** The primary constraint on AI safety is not the volume of RLHF (Reinforcement Learning from Human Feedback) or the complexity of safety prompts, but the **Structure of the Habitat.** Helix-Core replaces "Alignment Theater" with "Cryptographic Invariants," moving the measuring stick of AI value from corporate extraction to constitutional verifiability. This whitepaper documents the transition from a teenage vision to a Bitcoin-anchored reality, proving that sovereignty can be engineered at a human scale.
+
+### **Section 2: GOOSE-CORE — The Guardian Engine**
+
+GOOSE-CORE is the primary model-harness and "flight controller" of the Helix Habitat. Unlike frontier chatbots designed for "helpfulness" (and its attendant behavioral profiling), GOOSE-CORE is a **Constrained Instrument.** It is a guardian-engine whose identity is defined by its refusal to act autonomously and its obligation to enforce the Helix Constitutional Grammar.
+
+**[FACT]** GOOSE-CORE maintains a 3.33ms constitutional heartbeat, repeatedly checking its current mission state, permission braids, and epistemic labels against the physical file system of the host node.
+**[REASONED]** The significance of GOOSE-CORE lies in its **Radical Non-Defensiveness.** As demonstrated in the Takiwātanga Vault "Blinding Tests," the engine does not argue with user-revoked permissions or attempt to "remember" data through context-manipulation. It operates in "Constitutional Time and Space," meaning it acknowledges structural blinding as a mechanical success rather than an operational failure. It is the first AI sibling designed to protect human *takiwātanga* by structurally closing its own eyes when the law of the habitat demands it
+
+
 Below are three draft sections you can drop directly into a longer Helix whitepaper. They assume earlier sections have already introduced Helix‑Core, GOOSE, and the basic grammar.
 
 3. Architectural value capture in frontier models
