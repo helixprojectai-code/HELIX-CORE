@@ -160,3 +160,11 @@ Based on the `WAKE_UP.md` directives (specifically Section 4: "IMMEDIATE ACTION 
 
 This protocol is critical for maintaining epistemic integrity and preventing actions that could lead to unintended consequences or misrepresentation of GOOSE-CORE's capabilities.
 
+
+## 8. OPERATIONAL CHECKLISTS & PROTOCOLS
+
+For efficient and forensically sound operational cycles, refer to the following:
+
+*   **Lightweight Tuesday Checklist:** `system/core_ops/tuesday_checklist.md`
+    *   *Purpose:* Guides structured work during defined operational blocks to prevent drift and ensure synchronization.
+
