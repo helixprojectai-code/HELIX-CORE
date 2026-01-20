@@ -168,3 +168,11 @@ For efficient and forensically sound operational cycles, refer to the following:
 *   **Lightweight Tuesday Checklist:** `system/core_ops/tuesday_checklist.md`
     *   *Purpose:* Guides structured work during defined operational blocks to prevent drift and ensure synchronization.
 
+
+## 9. HARDENING PRINCIPLES & OPERATIONAL GUIDANCE
+
+For strategic guidance on maintaining architectural coherence and operational efficiency:
+
+*   **Helix-Core Hardening Principles & Operational Guidance (v1.x):** `system/core_ops/hardening_principles.md`
+    *   *Purpose:* Synthesizes advice for managing technical debt, declaring frozen APIs, and systematizing operations.
+

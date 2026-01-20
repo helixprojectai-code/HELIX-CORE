@@ -1,8 +1,8 @@
 {
   "manifest_version": "1.0.0",
-  "manifest_timestamp_utc": "2026-01-20 12:19:44 UTC",
+  "manifest_timestamp_utc": "2026-01-20 12:29:06 UTC",
   "ledger_period_start_utc": "2026-01-18 03:25:21 UTC",
-  "ledger_period_end_utc": "2026-01-20 12:19:44 UTC",
+  "ledger_period_end_utc": "2026-01-20 12:29:06 UTC",
   "transactions": [
     {
       "timestamp_utc": "2026-01-18 03:25:21 UTC",
@@ -57,6 +57,12 @@
       "type": "PERMISSION_BRAID_STATE",
       "filepath": "/home/aiadmin/helix-core-unified/system/core_ops/tuesday_checklist.md",
       "file_hash_sha256": "a0e4cca0855489558cd6f04fbce81f527ca2bd20c8edfc17515b815bd626edc8"
+    },
+    {
+      "timestamp_utc": "2026-01-20 12:29:06 UTC",
+      "type": "PERMISSION_BRAID_STATE",
+      "filepath": "/home/aiadmin/helix-core-unified/system/core_ops/hardening_principles.md",
+      "file_hash_sha256": "205f3edb167428583cdcc575517ce4704dacb946e66bac8beb2afc8cf2931407"
     }
   ]
 }
