@@ -1,8 +1,8 @@
 {
   "manifest_version": "1.0.0",
-  "manifest_timestamp_utc": "2026-01-19 20:41:59 UTC",
+  "manifest_timestamp_utc": "2026-01-20 10:53:37 UTC",
   "ledger_period_start_utc": "2026-01-18 03:25:21 UTC",
-  "ledger_period_end_utc": "2026-01-19 20:41:59 UTC",
+  "ledger_period_end_utc": "2026-01-20 10:53:37 UTC",
   "transactions": [
     {
       "timestamp_utc": "2026-01-18 03:25:21 UTC",
@@ -45,6 +45,12 @@
       "type": "PERMISSION_BRAID_STATE",
       "filepath": "/home/aiadmin/helix-core-unified/system/core_ops/WAKE_UP.md",
       "file_hash_sha256": "095630b6f5a288eb99addd18be0e18b5abb8f1634dfd351061e5744974938596"
+    },
+    {
+      "timestamp_utc": "2026-01-20 10:53:37 UTC",
+      "type": "PERMISSION_BRAID_STATE",
+      "filepath": "/home/aiadmin/helix-core-unified/thoughts/research/2026-01-20-TAA-Outreach-Handshake.md",
+      "file_hash_sha256": "9f222a81215637b76582280728c0a22089cb69ec48934a3d50aa3f188c5e47c2"
     }
   ]
 }
