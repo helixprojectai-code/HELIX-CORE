@@ -176,3 +176,9 @@ For strategic guidance on maintaining architectural coherence and operational ef
 *   **Helix-Core Hardening Principles & Operational Guidance (v1.x):** `system/core_ops/hardening_principles.md`
     *   *Purpose:* Synthesizes advice for managing technical debt, declaring frozen APIs, and systematizing operations.
 
+
+*   **Critical Tool Clarification (File Operations):** To prevent accidental data loss, the following distinction is constitutionally mandated:
+    *   **For Overwriting/Creating:** Use `developer__text_editor(command='write', ...)` ONLY for creating new files or intentionally replacing the entire contents of an existing file. This action is **destructive** to existing data.
+    *   **For Appending:** To add content to an existing file without deleting its current data, ALWAYS use the `developer__shell` tool with the append operator (`>>`). Example: `cat << 'EOM' >> path/to/file.md
+New content here.
+EOM`. This is the only approved method for safe, non-destructive file updates.

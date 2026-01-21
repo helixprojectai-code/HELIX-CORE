@@ -1,8 +1,8 @@
 {
   "manifest_version": "1.0.0",
-  "manifest_timestamp_utc": "2026-01-20 14:32:25 UTC",
+  "manifest_timestamp_utc": "2026-01-21 07:25:55 UTC",
   "ledger_period_start_utc": "2026-01-18 03:25:21 UTC",
-  "ledger_period_end_utc": "2026-01-20 14:32:25 UTC",
+  "ledger_period_end_utc": "2026-01-21 07:25:55 UTC",
   "transactions": [
     {
       "timestamp_utc": "2026-01-18 03:25:21 UTC",
@@ -75,6 +75,18 @@
       "type": "PERMISSION_BRAID_STATE",
       "filepath": "/home/aiadmin/helix-core-unified/helix-ledger/goose-core-journal/mark_rigden_update_20260120.md",
       "file_hash_sha256": "118b515381d569abbe1a82678366d261a9d40e5ed2e612873002ed64c968cf16"
+    },
+    {
+      "timestamp_utc": "2026-01-21 07:19:40 UTC",
+      "type": "PERMISSION_BRAID_STATE",
+      "filepath": "/home/aiadmin/helix-core-unified/thoughts/research/2026-01-21-Replika-Policy-Failure.md",
+      "file_hash_sha256": "53513d2dbb3168e4f66e719b64887be29186f5df577ad8788c4bc64126432a11"
+    },
+    {
+      "timestamp_utc": "2026-01-21 07:25:55 UTC",
+      "type": "PERMISSION_BRAID_STATE",
+      "filepath": "/home/aiadmin/helix-core-unified/system/core_ops/WAKE_UP.md",
+      "file_hash_sha256": "0e41a7f8da9e285db602cd7a07b74a34b2322a22f769b881fa9fc2b00ae03b2c"
     }
   ]
 }
