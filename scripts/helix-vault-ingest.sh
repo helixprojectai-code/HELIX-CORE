@@ -1,5 +1,13 @@
 #!/bin/bash
 
+HABITAT_LOCK_PATH="/home/aiadmin/helix-core-unified/system/core_ops/HABITAT_LOCK.json"
+if [ -f "$HABITAT_LOCK_PATH" ]; then
+    echo "❌ [FATAL] Habitat is in QUARANTINE mode. All state changes are blocked."
+    echo "Reason: $(jq -r .reason "$HABITAT_LOCK_PATH")"
+    exit 1
+fi
+
+
 # --- Grounded v1.2.0 Paths ---
 SITE_ROOT="/home/aiadmin/helix-core-unified"
 LEDGER_MANIFEST="$SITE_ROOT/thoughts/manifests/ledger_manifest.json"
