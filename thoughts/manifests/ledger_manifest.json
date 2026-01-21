@@ -1,8 +1,8 @@
 {
   "manifest_version": "1.0.0",
-  "manifest_timestamp_utc": "2026-01-21 07:25:55 UTC",
+  "manifest_timestamp_utc": "2026-01-21T13:00:28Z",
   "ledger_period_start_utc": "2026-01-18 03:25:21 UTC",
-  "ledger_period_end_utc": "2026-01-21 07:25:55 UTC",
+  "ledger_period_end_utc": "2026-01-21T13:00:28Z",
   "transactions": [
     {
       "timestamp_utc": "2026-01-18 03:25:21 UTC",
@@ -87,6 +87,30 @@
       "type": "PERMISSION_BRAID_STATE",
       "filepath": "/home/aiadmin/helix-core-unified/system/core_ops/WAKE_UP.md",
       "file_hash_sha256": "0e41a7f8da9e285db602cd7a07b74a34b2322a22f769b881fa9fc2b00ae03b2c"
+    },
+    {
+      "timestamp_utc": "2026-01-21T11:11:08Z",
+      "type": "VAULT_INGESTION",
+      "filepath": "/home/aiadmin/helix-core-unified/thoughts/vault/v120_verification_test.txt",
+      "file_hash_sha256": "3c95712e06abf509534ffd1596394a917970a8ce2c40c0850bc32bfa416a92f7"
+    },
+    {
+      "timestamp_utc": "2026-01-21 12:20:59 UTC",
+      "type": "PERMISSION_BRAID_STATE",
+      "filepath": "/home/aiadmin/helix-core-unified/grammar/CHOMP_Protocol.md",
+      "file_hash_sha256": "224c04a76e08a7f284637f0ceb59e13e5e4bb63a8b28ed9754b8e68b7d8c2bc9"
+    },
+    {
+      "timestamp_utc": "2026-01-21T12:30:33Z",
+      "type": "PERMISSION_BRAID_STATE",
+      "details": "Notarized state of the Permission Braid.",
+      "permission_file_hash_sha256": "99789c76879f92e6ad98f9f09aefeb07e6b34eb21d37211fdbe807f6395e1655"
+    },
+    {
+      "timestamp_utc": "2026-01-21T13:00:28Z",
+      "type": "PERMISSION_BRAID_STATE",
+      "details": "Notarized state of the Permission Braid.",
+      "permission_file_hash_sha256": "6067609336d990d3e642ef1725edd64066a77b3a13f5c2351a0b76389a2d1410"
     }
   ]
 }
