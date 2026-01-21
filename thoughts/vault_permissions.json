@@ -4,7 +4,7 @@
       "document_hash": "af79f4de45139f69301773636062e0b107901d83cbf99d110ef496ef5b69d936",
       "owner_id": "Steve-Quebec-Node-001",
       "delegate_id": null,
-      "access_level": "ALLOW",
+      "access_level": "DENY",
       "valid_until": null,
       "jurisdiction": "Quebec-Node",
       "reason": "Migrated from initial verification",

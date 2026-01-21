@@ -1,8 +1,8 @@
 {
   "manifest_version": "1.0.0",
-  "manifest_timestamp_utc": "2026-01-20 12:29:06 UTC",
+  "manifest_timestamp_utc": "2026-01-20 14:32:25 UTC",
   "ledger_period_start_utc": "2026-01-18 03:25:21 UTC",
-  "ledger_period_end_utc": "2026-01-20 12:29:06 UTC",
+  "ledger_period_end_utc": "2026-01-20 14:32:25 UTC",
   "transactions": [
     {
       "timestamp_utc": "2026-01-18 03:25:21 UTC",
@@ -63,6 +63,18 @@
       "type": "PERMISSION_BRAID_STATE",
       "filepath": "/home/aiadmin/helix-core-unified/system/core_ops/hardening_principles.md",
       "file_hash_sha256": "205f3edb167428583cdcc575517ce4704dacb946e66bac8beb2afc8cf2931407"
+    },
+    {
+      "timestamp_utc": "2026-01-20 12:41:04 UTC",
+      "type": "PERMISSION_BRAID_STATE",
+      "filepath": "/home/aiadmin/helix-core-unified/docs/CLOUD_USAGE_AND_MIGRATION_PLAN.md",
+      "file_hash_sha256": "80d825dc9342a4a2f966a18f44b580a3c79162f8d64ae8edcc9115dea308f0e6"
+    },
+    {
+      "timestamp_utc": "2026-01-20 14:32:25 UTC",
+      "type": "PERMISSION_BRAID_STATE",
+      "filepath": "/home/aiadmin/helix-core-unified/helix-ledger/goose-core-journal/mark_rigden_update_20260120.md",
+      "file_hash_sha256": "118b515381d569abbe1a82678366d261a9d40e5ed2e612873002ed64c968cf16"
     }
   ]
 }
