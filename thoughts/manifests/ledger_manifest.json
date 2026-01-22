@@ -1,8 +1,8 @@
 {
   "manifest_version": "1.0.0",
-  "manifest_timestamp_utc": "2026-01-21 16:50:47 UTC",
+  "manifest_timestamp_utc": "2026-01-22T01:19:51Z",
   "ledger_period_start_utc": "2026-01-18 03:25:21 UTC",
-  "ledger_period_end_utc": "2026-01-21 16:50:47 UTC",
+  "ledger_period_end_utc": "2026-01-22T01:19:51Z",
   "transactions": [
     {
       "timestamp_utc": "2026-01-18 03:25:21 UTC",
@@ -123,6 +123,18 @@
       "type": "PERMISSION_BRAID_STATE",
       "filepath": "/home/aiadmin/helix-core-unified/grammar/Identity_Boilerplates_v1.2.1.md",
       "file_hash_sha256": "4618fd5e61e9a67be6adc3ccd0bea741681417b0174d1a9b09436936c52d7912"
+    },
+    {
+      "timestamp_utc": "2026-01-21T18:15:09Z",
+      "type": "PERMISSION_BRAID_STATE",
+      "details": "Notarized state of the Permission Braid.",
+      "permission_file_hash_sha256": "76ff63ac3117c312125f97450bdcc95da4ab41623e7f5a1cbb230be635d19825"
+    },
+    {
+      "timestamp_utc": "2026-01-22T01:19:51Z",
+      "type": "PERMISSION_BRAID_STATE",
+      "details": "Notarized state of the Permission Braid.",
+      "permission_file_hash_sha256": "76ff63ac3117c312125f97450bdcc95da4ab41623e7f5a1cbb230be635d19825"
     }
   ]
 }
