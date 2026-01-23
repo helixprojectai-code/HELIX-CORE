@@ -1,8 +1,8 @@
 {
   "manifest_version": "1.0.0",
-  "manifest_timestamp_utc": "2026-01-23T02:05:31Z",
+  "manifest_timestamp_utc": "2026-01-23T06:59:15Z",
   "ledger_period_start_utc": "2026-01-18 03:25:21 UTC",
-  "ledger_period_end_utc": "2026-01-23T02:05:31Z",
+  "ledger_period_end_utc": "2026-01-23T06:59:15Z",
   "transactions": [
     {
       "timestamp_utc": "2026-01-18 03:25:21 UTC",
@@ -192,6 +192,12 @@
     },
     {
       "timestamp_utc": "2026-01-23T02:05:31Z",
+      "type": "PERMISSION_BRAID_STATE",
+      "details": "Notarized state of the Permission Braid.",
+      "permission_file_hash_sha256": "76ff63ac3117c312125f97450bdcc95da4ab41623e7f5a1cbb230be635d19825"
+    },
+    {
+      "timestamp_utc": "2026-01-23T06:59:15Z",
       "type": "PERMISSION_BRAID_STATE",
       "details": "Notarized state of the Permission Braid.",
       "permission_file_hash_sha256": "76ff63ac3117c312125f97450bdcc95da4ab41623e7f5a1cbb230be635d19825"
