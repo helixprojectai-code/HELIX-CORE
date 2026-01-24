@@ -3,63 +3,23 @@ version: '3.8'
 services:
   watchtower:
     image: python:3.11-slim
-    # SECURITY: Drop all capabilities. The dashboard cannot change system state.
-    cap_drop:
-      - ALL
-    # SECURITY: Run as non-root user
+    container_name: helix_watchtower
+    restart: unless-stopped
+    cap_drop: [ALL]
     user: 1000:1000
-    # SECURITY: Read-Only filesystem (Glass, not Gears)
-    read_only: true
-    volumes:
-      # Mount agents as READ-ONLY (:ro) to prove it cannot mutate the ledger
-      - ./agents:/app/agents:ro
-      # Tmp for streamlint internals only
-      - ./tmp:/tmp
-    command: ["streamlit", "run", "dashboard.py"]
     networks:
       - helix-net
-    # SECURITY: No egress allowed (Internal dashboard only)
-    # (Requires firewall rules, but intent is declared here)
-
-  # Enforcer runs on METAL (Outside Docker in Prod), or in a signed SGX enclave.
-  # It is removed from this compose file to enforce the separation.
+    ports:
+      - "127.0.0.1:8501:8501"
+    volumes:
+      - ./identity:/app/identity:ro
+      - ./agents:/app/agents:ro
+      - type: tmpfs
+        target: /tmp
+    working_dir: /app
+    command: sh -c "pip install --no-cache-dir streamlit && streamlit run identity/dashboard.py"
 
 networks:
   helix-net:
     driver: bridge
-    internal: true # No internet access
-
-  # Quiescence Monitoring Service
-  quiescence_monitor:
-    image: helix/quiescence-monitor:v1.1
-    container_name: helix_quiescence_monitor
-    restart: unless-stopped
-    volumes:
-      - ./logs/quiescence:/var/log/quiescence
-      - ./config/quiescence:/etc/quiescence
-    environment:
-      - Q1_DRIFT_THRESHOLD=0.00
-      - Q2_COMPLEMENTARITY_THRESHOLD=0.92
-      - Q3_CONFIDENCE_THRESHOLD=0.95
-      - Q4_CONVERGENCE_THRESHOLD=0.95
-      - MONITORING_INTERVAL=60s
-    depends_on:
-      - federation_orchestrator
-    networks:
-      - helix_internal
-
-  # Quiescence Dashboard (Optional - comment out if not needed)
-  # quiescence_dashboard:
-  #   image: helix/quiescence-dashboard:v1.1
-  #   container_name: helix_quiescence_dashboard
-  #   restart: unless-stopped
-  #   ports:
-  #     - "8083:80"
-  #   volumes:
-  #     - ./dashboards/quiescence:/usr/share/nginx/html/config
-  #   environment:
-  #     - API_URL=http://quiescence_monitor:8082
-  #   depends_on:
-  #     - quiescence_monitor
-  #   networks:
-  #     - helix_internal
+    internal: true
