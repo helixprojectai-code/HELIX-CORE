@@ -13,3 +13,6 @@
 [submodule "helix-ledger"]
 	path = helix-ledger
 	url = https://github.com/helixprojectai-code/HELIX-LEDGER.git
+[submodule "perimeter"]
+	path = perimeter
+	url = https://github.com/helixprojectai-code/helix-core-constitutional-defense.git
