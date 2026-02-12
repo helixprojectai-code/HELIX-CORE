@@ -1,11 +1,17 @@
-# 🧬 HELIX CORE
+#HELIX CORE
 ### A Sovereign Framework for Constitutional AI Governance
 
 **HELIX CORE** is a layered, sovereign architecture for building, auditing, and governing autonomous AI systems with embedded ethics and verifiable accountability. It spans from foundational identity to metabolic ledger operations.
 
 > **📮 For all implementation support, next-step planning, and project discussions, contact the core team: [helix.project.ai@helixprojectai.com](mailto:helix.project.ai@helixprojectai.com)**
+=======
+# Sovereign Runtime
 
----
+Constitutional oversight layer for Python scripts in the HELIX AI ecosystem.
+
+## What is This?
+
+The Sovereign Runtime provides constitutional governance for Python scripts, ensuring:
 
 ## 🏗️ 1. ARCHITECTURE & DIRECTORY MAP
 
@@ -106,3 +112,39 @@ If you encounter issues:
 ---
 
 *HELIX CORE – Governing the architecture of thought across sovereign layers.*
+=======
+1. **Deterministic Execution** - Reproducible results for precedent-setting operations
+2. **Automatic Auditing** - Every function call is logged with constitutional proof
+3. **Message Governance** - Inter-script communication with authority verification
+4. **Self-Healing Integration** - Anomaly detection and recovery coordination
+
+## Quick Start
+
+```python
+from sovereign_runtime import constitutional_agent
+
+@constitutional_agent
+def your_function(*args, **kwargs):
+    # Your code now has constitutional oversight
+    return result
+Integration with HELIX
+This package is part of the HELIX-CORE unified repository and integrates with:
+
+L0: Identity Layer (DBC & Suitcase)
+
+L4: Metabolic Anchor (Helix Ledger V9)
+
+The Vault (Agent storage and glyphs)
+
+Installation
+Development install:
+
+bash
+pip install -e .
+Production via Docker:
+
+bash
+docker-compose -f docker-compose.prod.yml up -d sovereign-runtime
+License
+Part of the HELIX Sovereign AI Framework.
+>>>>>>> Stashed changes

@@ -3,12 +3,11 @@ version: '3.8'
 services:
   watchtower:
     # Python 3.11-slim (Pinned Digest)
-    image: python@sha256:2f039322312674e20967650942d99d3d3b76920f2693950ba3cb8be23c220275
+    image: python:3.11-slim
     container_name: helix_watchtower
     restart: unless-stopped
     cap_drop: [ALL]
     user: 1000:1000
-    read_only: true
     networks:
       - helix-net
     ports:
@@ -21,11 +20,10 @@ services:
     command: sh -c "pip install --no-cache-dir . && streamlit run dashboard.py"
 
   hgl-compiler:
-    image: python@sha256:2f039322312674e20967650942d99d3d3b76920f2693950ba3cb8be23c220275
+    image: python:3.11-slim
     container_name: helix_hgl
     cap_drop: [ALL]
     user: 1000:1000
-    read_only: true
     networks:
       - helix-net
     volumes:
