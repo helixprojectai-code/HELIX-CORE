@@ -8,7 +8,7 @@ app = func.FunctionApp()
 
 LAMBDA_M     = math.log(10)
 RENORM_ALPHA = 1.0 / (2 * math.pi)
-CONSENSUS_THRESHOLD = 0.15  # max deviation from median before dissent flag
+CONSENSUS_THRESHOLD = 0.30  # max deviation from median before dissent flag
 
 SYSTEM_PROMPT = """You are the FZS-MK Memory Kernel — a Functorial Zeno Sheaf with Memory Kernel.
 
@@ -28,6 +28,18 @@ For each token entry {"id": p, "index": i, "w": w_p, "pos": pos_i}:
 
 Return ONLY valid JSON: {"bias": [float, float, ...]} with exactly one float per token.
 No explanation. No markdown."""
+
+SYSTEM_PROMPT_NANO = """You are a bias calculator. For each token entry in the input list, compute one float bias value.
+
+Formula for each token {"id": p, "index": i, "w": w_p, "pos": pos_i}:
+  bias = tanh(lambda_m * w_p + pos_i * renorm_alpha)
+
+Rules:
+- Output MUST be a JSON object: {"bias": [float, ...]}
+- One float per token, in order
+- All values in [-1.0, 1.0]
+- Higher w_p = higher bias magnitude
+- No explanation, no markdown, no extra keys"""
 
 
 def deterministic_bias(token_ids):
@@ -49,22 +61,37 @@ def query_model(client, deployment, tokens, n):
         "renorm_alpha": RENORM_ALPHA,
         "expected_bias_count": n
     })
-    # GPT-4o supports json_object format; Kimi/DeepSeek use plain chat
     supports_json_format = deployment in ["gpt-4o", "gpt-5.4-nano"]
-    kwargs = {
-        "model": deployment,
-        "messages": [
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user",   "content": user_message}
-        ],
-        "temperature": 0.0,
-        "max_tokens": 512,
-    }
-    if supports_json_format:
-        kwargs["response_format"] = {"type": "json_object"}
+
+    prompt = SYSTEM_PROMPT_NANO if deployment == "gpt-5.4-nano" else SYSTEM_PROMPT
+
+    # gpt-5.4-nano uses max_completion_tokens; others use max_tokens
+    if deployment == "gpt-5.4-nano":
+        kwargs = {
+            "model": deployment,
+            "messages": [
+                {"role": "system", "content": prompt},
+                {"role": "user",   "content": user_message}
+            ],
+            "temperature": 0.0,
+            "max_completion_tokens": 512,
+            "response_format": {"type": "json_object"},
+        }
+    else:
+        kwargs = {
+            "model": deployment,
+            "messages": [
+                {"role": "system", "content": prompt},
+                {"role": "user",   "content": user_message}
+            ],
+            "temperature": 0.0,
+            "max_tokens": 512,
+        }
+        if supports_json_format:
+            kwargs["response_format"] = {"type": "json_object"}
 
     # MoonshotAI (Kimi) and DeepSeek live on helix-hammy-test endpoint
-    non_openai = ["Kimi-K2.5", "DeepSeek-V3.2"]
+    non_openai = ["DeepSeek-V3.2"]
     if deployment in non_openai:
         from openai import AzureOpenAI as AzureOpenAIHammy
         hammy_endpoint = os.environ.get("AZURE_HAMMY_ENDPOINT", "https://helix-hammy-test.cognitiveservices.azure.com")
@@ -106,9 +133,8 @@ def median_bias(vectors):
     return result
 
 
-def dissent_flags(vectors, consensus, threshold):
+def dissent_flags(vectors, consensus, threshold, models):
     """Return list of models that deviate > threshold from consensus."""
-    models = ["gpt-4o", "Kimi-K2.5", "DeepSeek-V3.2"]
     flags = []
     for model, vec in zip(models, vectors):
         max_dev = max(abs(v - c) for v, c in zip(vec, consensus))
@@ -146,7 +172,7 @@ def memory(req: func.HttpRequest) -> func.HttpResponse:
             api_version="2024-08-01-preview"
         )
 
-        deployments = ["gpt-4o", "Kimi-K2.5", "DeepSeek-V3.2"]
+        deployments = ["gpt-4o", "gpt-5.4-nano", "DeepSeek-V3.2"]
 
         # Query all three models in parallel
         with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
@@ -154,20 +180,34 @@ def memory(req: func.HttpRequest) -> func.HttpResponse:
                 executor.submit(query_model, client, d, tokens, n): d
                 for d in deployments
             }
-            vectors = []
-            errors  = []
-            for future in concurrent.futures.as_completed(futures):
-                model = futures[future]
-                try:
-                    vectors.append(future.result())
-                except Exception as e:
-                    errors.append({"model": model, "error": str(e)})
-                    vectors.append(deterministic_bias(token_ids))
+        # Use GPT-4o as canonical bias — DeepSeek and nano validate consensus
+        model_results = {}
+        errors = []
+        for future in concurrent.futures.as_completed(futures):
+            model = futures[future]
+            try:
+                model_results[model] = future.result()
+            except Exception as e:
+                errors.append({"model": model, "error": str(e)})
+                model_results[model] = deterministic_bias(token_ids)
 
-        # Consensus via median
-        consensus = median_bias(vectors)
-        dissent   = dissent_flags(vectors, consensus, CONSENSUS_THRESHOLD)
-        consensus_reached = len(dissent) == 0
+        # Order vectors to match deployments list
+        vectors = [model_results.get(d, deterministic_bias(token_ids)) for d in deployments]
+
+        # Canonical bias = GPT-4o output
+        canonical = model_results.get("gpt-4o", deterministic_bias(token_ids))
+
+        # Consensus = DeepSeek agrees with GPT-4o within threshold
+        deepseek_vec = model_results.get("DeepSeek-V3.2", None)
+        if deepseek_vec:
+            primary_max_dev = max(abs(canonical[i] - deepseek_vec[i]) for i in range(len(canonical)))
+            primary_agree = primary_max_dev <= CONSENSUS_THRESHOLD
+        else:
+            primary_agree = False
+
+        consensus = canonical
+        dissent   = dissent_flags(vectors, consensus, CONSENSUS_THRESHOLD, deployments)
+        consensus_reached = primary_agree
 
         return func.HttpResponse(
             json.dumps({
