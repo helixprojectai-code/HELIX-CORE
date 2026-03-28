@@ -3,6 +3,7 @@ import numpy as np
 from pikernel.projectors import ProjectorFamily, PiIndexGrid
 from pikernel.kernel import PiKernel
 from pikernel.ledger import Ledger
+from pikernel.mub_audit import mub_drift_audit
 
 
 def _build_kernel(n: int) -> PiKernel:
@@ -53,6 +54,9 @@ def handler(event, context):
     result = kernel.step(x)
     bias = result['xnew'].tolist()
 
+    # MUB drift audit on the state vector
+    mub = mub_drift_audit(result['xnew'], threshold=3.0)
+
     return {
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json'},
@@ -61,5 +65,8 @@ def handler(event, context):
             'SlopeUB': result['SlopeUB'],
             'GapLB': result['GapLB'],
             'num_touched': result['num_touched'],
+            'mub_D_t': mub['D_t'],
+            'mub_alarm': mub['alarm'],
+            'mub_action': mub['action'],
         })
     }
