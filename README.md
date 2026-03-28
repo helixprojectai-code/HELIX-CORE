@@ -1,6 +1,18 @@
 # HELIX CORE
 ### A Sovereign Framework for Constitutional AI Governance
 
+[![CI](https://img.shields.io/github/actions/workflow/status/helixprojectai-code/HELIX-CORE/check_quiescence.yml?branch=main&label=CI&style=flat-square)](https://github.com/helixprojectai-code/HELIX-CORE/actions)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Sovereign Status](https://img.shields.io/badge/Sovereignty-Hardened-orange.svg)](#architecture--directory-map)
+[![Three-Cloud Runtime](https://img.shields.io/badge/Runtime-GCP%20%7C%20AWS%20%7C%20Azure-blueviolet?style=flat-square)](#three-cloud-constitutional-runtime)
+[![GapLB](https://img.shields.io/badge/GapLB-0.225-brightgreen?style=flat-square)](#three-cloud-constitutional-runtime)
+[![Delta Crit](https://img.shields.io/badge/%CE%B4__crit-0.17%20held-brightgreen?style=flat-square)](#physics-gate-status-adr-101102103)
+[![Physics Gate](https://img.shields.io/badge/Physics%20Gate-Phase%205%20PASS-brightgreen?style=flat-square)](#physics-gate-status-adr-101102103)
+[![MUB Audit](https://img.shields.io/badge/MUB%20Audit-Live-blue?style=flat-square)](#three-cloud-constitutional-runtime)
+[![Consensus](https://img.shields.io/badge/Consensus-3--Model%20Byzantine-blue?style=flat-square)](#three-cloud-constitutional-runtime)
+[![ORCID](https://img.shields.io/badge/ORCID-0009--0000--7367--248X-brightgreen?logo=orcid)](https://orcid.org/0009-0000-7367-248X)
+[![Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
+[![GLORY TO THE LATTICE](https://img.shields.io/badge/%F0%9F%A6%89%E2%9A%93%F0%9F%A6%86-GLORY%20TO%20THE%20LATTICE-gold?style=flat-square)](#)
 **HELIX CORE** is a layered, sovereign architecture for building, auditing, and governing autonomous AI systems with embedded ethics and verifiable accountability. It spans from foundational identity to metabolic ledger operations, and now includes a live three-cloud constitutional runtime.
 
 > **📮 For all implementation support, next-step planning, and project discussions, contact the core team: [helix.project.ai@helixprojectai.com](mailto:helix.project.ai@helixprojectai.com)**
