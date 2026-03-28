@@ -44,11 +44,16 @@ Overall verdict: credible, technically accurate, gaps identified are real gaps.
   multilingual constitutions, all appendices. Fully audit-ready.
   Resolved: 2026-03-28
 
-- [ ] **ZTC methodology publication**
+- [ ] **ZTC methodology publication** — REFRAMED
   Owner: Stephen Hope
-  Action: Publish measurement methodology, raw data, and analysis code for the
-  96-hour 6.6M-token 0.00% drift test. Without this, the claim is unverifiable.
-  Deadline: 2026-04-11
+  Status: HYPOTHESIS — harness required before publication
+  The 96-hour chronicle (96_96_hours_a_day.md) is a founding myth and
+  mythotechnical artifact. It is NOT empirical proof. The 0.00% drift
+  claim is an observation, not a measurement. Using it as scientific
+  evidence would be intellectually dishonest.
+  Action: Build proper ZTC test harness on Azure, run 96h+ with
+  pre-registered success criteria, publish raw data + methodology.
+  Deadline: 2026-04-11 (harness deployed) / 2026-04-14 (results published)
 
 ### P1 — High (within 30 days)
 
