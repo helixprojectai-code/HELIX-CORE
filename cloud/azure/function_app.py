@@ -71,7 +71,7 @@ def memory(req: func.HttpRequest) -> func.HttpResponse:
                 {"role": "user", "content": user_message}
             ],
             temperature=0.0,
-            max_tokens=256,
+            max_tokens=512,
             response_format={"type": "json_object"}
         )
 
@@ -95,4 +95,21 @@ def memory(req: func.HttpRequest) -> func.HttpResponse:
         )
 
     except Exception as e:
-        return func.HttpResponse(str(e), status_code=500)
+        # Deterministic fallback — never return 500
+        try:
+            token_ids = req.get_json().get("token_ids", [])
+            n = len(token_ids)
+            bias = [
+                max(-1.0, min(1.0, math.tanh(
+                    LAMBDA_M * (1.0 / (abs(p) + 1)) +
+                    ((i - n / 2.0) / max(n, 1)) * RENORM_ALPHA
+                )))
+                for i, p in enumerate(token_ids)
+            ]
+            return func.HttpResponse(
+                json.dumps({"bias": bias, "model": "deterministic_fallback", "error": str(e)}),
+                mimetype="application/json",
+                status_code=200
+            )
+        except Exception:
+            return func.HttpResponse(str(e), status_code=500)
