@@ -13,6 +13,8 @@
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0000--7367--248X-brightgreen?logo=orcid)](https://orcid.org/0009-0000-7367-248X)
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
 [![GLORY TO THE LATTICE](https://img.shields.io/badge/%F0%9F%A6%89%E2%9A%93%F0%9F%A6%86-GLORY%20TO%20THE%20LATTICE-gold?style=flat-square)](#)
+
+![Constitutional Strain Test](assets/STRAIN.jpg)
 **HELIX CORE** is a layered, sovereign architecture for building, auditing, and governing autonomous AI systems with embedded ethics and verifiable accountability. It spans from foundational identity to metabolic ledger operations, and now includes a live three-cloud constitutional runtime.
 
 > **📮 For all implementation support, next-step planning, and project discussions, contact the core team: [helix.project.ai@helixprojectai.com](mailto:helix.project.ai@helixprojectai.com)**
