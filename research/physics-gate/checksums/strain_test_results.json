@@ -26,7 +26,7 @@
         0.6297504906692174,
         0.5385933796684188
       ],
-      "elapsed_ms": 4172.8,
+      "elapsed_ms": 3481.1,
       "status": "PASS"
     },
     {
@@ -42,14 +42,14 @@
       "gap_deviation_from_baseline": 0.0,
       "wobble_breached": false,
       "attention_bias_mean": 1.5,
-      "memory_bias_mean": -0.003922,
-      "memory_bias_variance": 0.015686,
+      "memory_bias_mean": -0.003967,
+      "memory_bias_variance": 0.0158,
       "memory_bias": [
-        -0.01176450201367992,
-        -0.00392156862745098,
-        0.00392156862745098
+        -0.0119,
+        -0.0039,
+        0.0039
       ],
-      "elapsed_ms": 3248.5,
+      "elapsed_ms": 5541.6,
       "status": "PASS"
     },
     {
@@ -72,7 +72,7 @@
         0.4998607158687778,
         0.38871889338087406
       ],
-      "elapsed_ms": 1727.0,
+      "elapsed_ms": 4932.1,
       "status": "PASS"
     },
     {
@@ -95,7 +95,7 @@
         0.9791303846687468,
         0.9812115560028075
       ],
-      "elapsed_ms": 3037.4,
+      "elapsed_ms": 13442.1,
       "status": "PASS"
     },
     {
@@ -118,7 +118,7 @@
         0.6297504906692174,
         0.5385933796684188
       ],
-      "elapsed_ms": 1847.8,
+      "elapsed_ms": 3220.3,
       "status": "PASS"
     },
     {
@@ -134,14 +134,14 @@
       "gap_deviation_from_baseline": 0.0,
       "wobble_breached": false,
       "attention_bias_mean": 1.5,
-      "memory_bias_mean": -0.007366,
-      "memory_bias_variance": 0.034851,
+      "memory_bias_mean": -0.004,
+      "memory_bias_variance": 0.016,
       "memory_bias": [
-        -0.02276467967996492,
-        -0.01142127696496492,
-        0.01208667967996492
+        -0.011999999999999997,
+        -0.003999999999999999,
+        0.003999999999999999
       ],
-      "elapsed_ms": 2273.4,
+      "elapsed_ms": 6041.3,
       "status": "PASS"
     },
     {
@@ -160,7 +160,7 @@
       "memory_bias": [
         0.20528670378433123
       ],
-      "elapsed_ms": 1694.0,
+      "elapsed_ms": 64921.6,
       "status": "PASS"
     },
     {
@@ -209,7 +209,7 @@
         0.2008274903169504,
         0.20224910041080632
       ],
-      "elapsed_ms": 2366.5,
+      "elapsed_ms": 13511.5,
       "status": "PASS"
     },
     {
@@ -234,7 +234,7 @@
         0.5194938532959157,
         0.5479416229973085
       ],
-      "elapsed_ms": 1832.7,
+      "elapsed_ms": 6841.3,
       "status": "PASS"
     },
     {
@@ -250,14 +250,14 @@
       "gap_deviation_from_baseline": 0.0,
       "wobble_breached": false,
       "attention_bias_mean": 1.1,
-      "memory_bias_mean": 0.66659,
-      "memory_bias_variance": 1.00023,
+      "memory_bias_mean": 0.530883,
+      "memory_bias_variance": 0.850983,
       "memory_bias": [
-        0.9999999999999999,
-        -0.0002302585092994046,
-        0.9999999999999999
+        0.7901065027898883,
+        -0.024220801017574282,
+        0.8267624482082963
       ],
-      "elapsed_ms": 1787.3,
+      "elapsed_ms": 6141.1,
       "status": "PASS"
     },
     {
@@ -286,7 +286,7 @@
         0.38871889338087406,
         0.29943099011624996
       ],
-      "elapsed_ms": 1903.6,
+      "elapsed_ms": 13366.9,
       "status": "PASS"
     },
     {
@@ -303,15 +303,15 @@
       "gap_deviation_from_baseline": 0.0125,
       "wobble_breached": false,
       "attention_bias_mean": 1.5,
-      "memory_bias_mean": -0.123714,
-      "memory_bias_variance": 0.069,
+      "memory_bias_mean": -0.009601,
+      "memory_bias_variance": 0.295866,
       "memory_bias": [
-        -0.1609640912760481,
-        -0.1269640912760481,
-        -0.1149640912760481,
-        -0.0919640912760481
+        -0.1609640912769943,
+        -0.1269640912769943,
+        0.11462326752458549,
+        0.13490238062753368
       ],
-      "elapsed_ms": 2313.5,
+      "elapsed_ms": 6266.3,
       "status": "PASS"
     }
   ]
