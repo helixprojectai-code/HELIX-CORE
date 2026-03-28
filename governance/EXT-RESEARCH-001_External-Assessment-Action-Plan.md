@@ -25,7 +25,7 @@ Overall verdict: credible, technically accurate, gaps identified are real gaps.
 
 | Gap | Severity | Notes |
 |-----|----------|-------|
-| Private `./grammar/` submodule contradicts "open for audit" | HIGH | Legitimate criticism |
+| ~~Private `./grammar/` submodule~~ | ~~HIGH~~ | RESOLVED — reviewer error, repo is public |
 | `0.00% drift` claim needs independent replication | MEDIUM | Methodology not published |
 | Hamiltonian framework needs peer review | MEDIUM | ADR-103 Wetterich proof open |
 | PiKernel / Multiplicity Foundation layer undocumented | LOW | Not public yet by design |
@@ -37,13 +37,12 @@ Overall verdict: credible, technically accurate, gaps identified are real gaps.
 
 ### P0 — Critical (within 14 days)
 
-- [ ] **Grammar submodule access**
-  Owner: Stephen Hope
-  Action: Publish grammar specification or provide transparent rationale for restriction
-  with explicit timeline for access. The "open for audit" claim cannot stand with
-  a private core submodge. Options: (a) make public, (b) publish read-only mirror,
-  (c) publish formal statement of restriction rationale + timeline.
-  Deadline: 2026-04-11
+- [x] **Grammar submodule access** — RESOLVED
+  Verified public: `helixprojectai-code/Helix-TTD-v1.0-Constitutional-Grammar`
+  Reviewer assessment was incorrect — repo is and was public.
+  Content confirmed: whitepaper_v1.0.md, specs/, GAP_PRESERVATION_ORDER.md,
+  multilingual constitutions, all appendices. Fully audit-ready.
+  Resolved: 2026-03-28
 
 - [ ] **ZTC methodology publication**
   Owner: Stephen Hope
