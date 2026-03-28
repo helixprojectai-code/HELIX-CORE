@@ -2,7 +2,7 @@ import json
 import numpy as np
 from pikernel.projectors import ProjectorFamily, PiIndexGrid
 from pikernel.kernel import PiKernel
-from pikernel.ledger import Ledger
+from pikernel.ledgerposeidon import PoseidonLedger
 from pikernel.mub_audit import mub_drift_audit
 
 
@@ -34,7 +34,7 @@ def _build_kernel(n: int) -> PiKernel:
     K = 0.05 * np.ones((m, m))
     np.fill_diagonal(K, 0.0)
 
-    return PiKernel(grid, alphas, weights, taus, K, ledger=Ledger())
+    return PiKernel(grid, alphas, weights, taus, K, ledger=PoseidonLedger())
 
 
 def handler(event, context):
@@ -57,6 +57,11 @@ def handler(event, context):
     # MUB drift audit on the state vector
     mub = mub_drift_audit(result['xnew'], threshold=3.0)
 
+    # Poseidon ledger digest of last touched atom
+    ledger_digest = None
+    if kernel.ledger and len(kernel.ledger) > 0:
+        ledger_digest = kernel.ledger.entries[-1].get('digest')
+
     return {
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json'},
@@ -68,5 +73,7 @@ def handler(event, context):
             'mub_D_t': mub['D_t'],
             'mub_alarm': mub['alarm'],
             'mub_action': mub['action'],
+            'ledger_digest': ledger_digest,
+            'ledger_type': 'poseidon_bn254',
         })
     }
