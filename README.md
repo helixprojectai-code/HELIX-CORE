@@ -1,150 +1,164 @@
-#HELIX CORE
+# HELIX CORE
 ### A Sovereign Framework for Constitutional AI Governance
 
-**HELIX CORE** is a layered, sovereign architecture for building, auditing, and governing autonomous AI systems with embedded ethics and verifiable accountability. It spans from foundational identity to metabolic ledger operations.
+**HELIX CORE** is a layered, sovereign architecture for building, auditing, and governing autonomous AI systems with embedded ethics and verifiable accountability. It spans from foundational identity to metabolic ledger operations, and now includes a live three-cloud constitutional runtime.
 
 > **📮 For all implementation support, next-step planning, and project discussions, contact the core team: [helix.project.ai@helixprojectai.com](mailto:helix.project.ai@helixprojectai.com)**
-=======
-# Sovereign Runtime
 
-Constitutional oversight layer for Python scripts in the HELIX AI ecosystem.
-
-## What is This?
-
-The Sovereign Runtime provides constitutional governance for Python scripts, ensuring:
+---
 
 ## 🏗️ 1. ARCHITECTURE & DIRECTORY MAP
 
-The system is structured across five sovereign layers (L0-L4), implemented as Git submodules, with a central vault.
+### Sovereign Layers (L0–L4)
 
 | Layer | Path | Description | Type |
 | :--- | :--- | :--- | :--- |
-| **L0** | `./identity/` | **Source: DBC & Suitcase** – Foundational identity and capability declarations. | Submodule |
-| **L1** | `./constitution/` | **Source: Rust REM** – Constitutional rule engine and execution monitor. | Submodule |
-| **L2** | `./hgl/` | **Source: HGL Compiler** – Hierarchical Grammar Language compiler for policy. | Submodule |
-| **L3** | `./grammar/` | **Source: Constitutional Grammar** – Definitive grammar for sovereign clauses. | Submodule |
-| **L4** | `./helix-ledger/` | **Source: Metabolic Anchor (V9 Stable)** – Immutable proof and state ledger. | Submodule |
-| **—** | `./agents/` | **The Vault: Stored DBCs and Glyphs** – Secure storage for agents and artifacts. | Shared Volume |
+| **L0** | `./identity/` | **DBC & Suitcase** – Foundational identity and capability declarations. | Submodule |
+| **L1** | `./constitution/` | **Rust REM** – Constitutional rule engine and execution monitor. | Submodule |
+| **L2** | `./hgl/` | **HGL Compiler** – Hierarchical Grammar Language compiler for policy. | Submodule |
+| **L3** | `./grammar/` | **Constitutional Grammar** – Definitive grammar for sovereign clauses. | Submodule |
+| **L4** | `./helix-ledger/` | **Metabolic Anchor (V9 Stable)** – Immutable proof and state ledger. | Submodule |
+| **—** | `./agents/` | **The Vault** – Secure storage for agents and artifacts. | Shared Volume |
 
 **Core Data Flow:**
 `Identity (L0) → Constitution (L1) → HGL Policy (L2) → Grammar Binding (L3) → Ledger Proof (L4)`
 
+### Three-Cloud Constitutional Runtime
+
+| Service | Cloud | Path | Status |
+| :--- | :--- | :--- | :--- |
+| **GICD Scanner** | GCP Cloud Run | `cloud/gcp/` | ✅ Live |
+| **Prime-Indexed Attention Kernel** | AWS Lambda | `cloud/aws/` | ✅ Live — PiKernel, GapLB=0.225 |
+| **FZS-MK Memory Kernel** | Azure Functions | `cloud/azure/` | ✅ Live |
+
+**Pre-nucleation check flow:**
+`GICD Scan (GCP) → Attention Kernel (AWS) → Memory Kernel (Azure) → PROCEED`
+
+### Runtime Bridge
+
+| Component | Path | Description |
+| :--- | :--- | :--- |
+| **TTD Bridge** | `./helix-hamiltonian/` | Knot Hamiltonian + `pre_nucleation_check` | Submodule |
+
+### Physics Gate (ADR-101/102/103)
+
+| Component | Path | Description |
+| :--- | :--- | :--- |
+| **Gate scripts** | `research/physics-gate/` | MKT bridge, phase transition, SlopeUB harness |
+| **Gate artifacts** | `research/physics-gate/checksums/` | Signed gate results + SHA-256 receipts |
+
 ---
 
-## 🚀 2. IGNITION (GOD MODE)
+## 🚀 2. IGNITION
 
-Deploy the full sovereign stack with a single sequence.
-
-### A. Clone the Federation (Must use `--recursive`)
+### A. Clone the Federation
 ```bash
 git clone --recursive https://github.com/helixprojectai-code/HELIX-CORE.git
 cd HELIX-CORE
 ```
 
+> **Note (Windows):** The `helix-ledger` submodule contains a file with characters invalid on Windows (`[` and `:`). Use `--ignore-errors` on submodule update:
+> ```bash
+> git submodule update --recursive --ignore-errors
+> ```
+
 ### B. Ignite the Full Fleet
-Ignites all layers and the monitoring stack.
 ```bash
 docker-compose -f docker-compose.prod.yml up -d
 ```
 
+### C. Verify Three-Cloud Runtime
+```python
+from helix_hamiltonian.ttd_bridge import pre_nucleation_check
+
+result = pre_nucleation_check(
+    {'authority_ambiguity': False, 'incentive_misalignment': False,
+     'cost_externalization': False, 'governance_capture': False},
+    [1, 2, 3]
+)
+# Expected: {'status': 'PASS', 'GapLB': 0.225, ...}
+```
+
 ### ✅ Post-Ignition Verification
+
 | Task | Command | What to Look For |
 | :--- | :--- | :--- |
-| **Check Fleet Status** | `docker-compose -f docker-compose.prod.yml ps` | All services show `Up`. |
-| **View Launch Logs** | `docker-compose -f docker-compose.prod.yml logs --tail=50` | Look for `INFO`/`Started` messages. |
-| **Stream Live Logs** | `docker-compose -f docker-compose.prod.yml logs -f` | Real-time monitoring (exit with `Ctrl+C`). |
-| **Stop the Fleet** | `docker-compose -f docker-compose.prod.yml down` | Stops and removes all containers. |
-| **Stop & Preserve Data** | `docker-compose -f docker-compose.prod.yml stop` | Stops containers but keeps them. |
+| Check Fleet Status | `docker-compose -f docker-compose.prod.yml ps` | All services show `Up` |
+| View Launch Logs | `docker-compose -f docker-compose.prod.yml logs --tail=50` | `INFO`/`Started` messages |
+| Stream Live Logs | `docker-compose -f docker-compose.prod.yml logs -f` | Real-time monitoring |
+| Stop the Fleet | `docker-compose -f docker-compose.prod.yml down` | Stops and removes containers |
 
 ---
 
-## 🛡️ 3. GOVERNANCE & CONTRIBUTION
+## 🌐 3. LIVE ENDPOINTS
+
+| Service | Endpoint |
+| :--- | :--- |
+| GICD Scanner (GCP) | `https://gicd-scanner-231586465188.us-central1.run.app/gicd-scan` |
+| Attention Kernel (AWS) | `https://erdmzd08ud.execute-api.us-east-1.amazonaws.com/default/helix-prime-4` |
+| Memory Kernel (Azure) | `https://helix-memory-kernel.azurewebsites.net/api/memory` |
+
+---
+
+## 🔬 4. PHYSICS GATE STATUS (ADR-101/102/103)
+
+| Phase | ADR | Status | Key Result |
+| :--- | :--- | :--- | :--- |
+| 3 | ADR-101 | 🔴 FALSIFIED + REMEDIATED | $c_0 \neq \ln 10$ — CF-PENDING, Path C, dual-signed |
+| 4 | ADR-102 | ✅ COMPLETE | `first_order`, hysteresis_area=25.36 |
+| 5 | ADR-103 | ✅ PASS | $\alpha=1/(2\pi)$ canonical, sup=0.5, gate_pass=true |
+| 6 | — | ⏸ DEFERRED | $\epsilon_{hb}$ measurement |
+| 7 | — | ⏸ DEFERRED | Multi-substrate harness |
+
+Gate artifacts and SHA-256 receipts: `research/physics-gate/checksums/`
+
+---
+
+## 🛡️ 5. GOVERNANCE & CONTRIBUTION
 
 HELIX CORE operates under active constitutional principles. All layer transitions and ledger entries are subject to precedent-based review.
 
-### For Contributors & Integrators
-We welcome deep technical discussions on layer integration, grammar extensions, and ledger proofs.
-
-**The central channel for all planning is:**
-**📧 [helix.project.ai@helixprojectai.com](mailto:helix.project.ai@helixprojectai.com)**
+**The central channel for all planning:**
+📧 [helix.project.ai@helixprojectai.com](mailto:helix.project.ai@helixprojectai.com)
 
 Use this email for:
-- Proposing new DBC structures or glyphs for **The Vault**.
-- Discussing extensions to the **Constitutional Grammar (L3)** or **HGL Compiler (L2)**.
-- Reporting complex, multi-layer integration issues.
-- Requesting access for collaborative development on specific layers.
-
-### For Users & Testers
-- Use repository Issues for reporting **clear bugs** within a single layer.
-- For **configuration help, deployment issues, or strategic guidance**, emailing the core team is the most efficient path.
+- Proposing new DBC structures or glyphs for The Vault
+- Discussing extensions to Constitutional Grammar (L3) or HGL Compiler (L2)
+- Reporting complex, multi-layer integration issues
+- Requesting access for collaborative development
 
 ---
 
-## 🔧 4. TROUBLESHOOTING & SUPPORT
+## 🔧 6. TROUBLESHOOTING
 
 ### Common First Steps
-1.  **Verify Submodules:** Ensure all layers are checked out: `git submodule status`
-2.  **Check Service Logs:** `docker-compose -f docker-compose.prod.yml logs [service_name]`
-3.  **Verify Container Status:** `docker-compose -f docker-compose.prod.yml ps`
-4.  **Ensure Ports Are Free:** Key ports (`3100`, `8080`, `6333`) must not conflict.
+1. **Verify Submodules:** `git submodule status`
+2. **Check Service Logs:** `docker-compose -f docker-compose.prod.yml logs [service_name]`
+3. **Verify Container Status:** `docker-compose -f docker-compose.prod.yml ps`
+4. **Ensure Ports Are Free:** Key ports (`3100`, `8080`, `6333`) must not conflict.
 
 ### Layer-Specific Issues
-- **L0/L1 Issues:** Check identity binding and REM rule compilation logs.
-- **L2/L3 Issues:** Validate HGL policy files and grammar syntax.
-- **L4 Issues:** Confirm ledger connectivity and proof generation.
-- **Vault Issues:** Verify volume mounts and artifact permissions in `./agents/`.
-
-### Getting Help
-If you encounter issues:
-1.  **Document Context:** Note your environment (OS, Docker version) and the affected layer.
-2.  **Capture Logs:** Include full error messages and relevant layer logs.
-3.  **Contact Core Team:** Send structured details to **[helix.project.ai@helixprojectai.com](mailto:helix.project.ai@helixprojectai.com)**.
+- **L0/L1:** Check identity binding and REM rule compilation logs
+- **L2/L3:** Validate HGL policy files and grammar syntax
+- **L4:** Confirm ledger connectivity and proof generation
+- **Cloud runtime:** See `cloud/aws/RUNBOOK.md` for Lambda/ECR issues
 
 ---
 
-## 📬 5. CONTACT & ROADMAP
+## 📬 7. CONTACT & ROADMAP
 
-- **Email (Primary):** [helix.project.ai@helixprojectai.com](mailto:helix.project.ai@helixprojectai.com)
-- **Source Code:** `https://github.com/helixprojectai-code/HELIX-CORE.git`
+- **Email:** [helix.project.ai@helixprojectai.com](mailto:helix.project.ai@helixprojectai.com)
+- **Source:** `https://github.com/helixprojectai-code/HELIX-CORE.git`
+- **Collaborator:** Ryan van Gelder (Multiplicity Foundation) — PiKernel, FZS-MK, ADR physics gate
 
-**Next Phase Planning:** Interested in expanding constitutional grammars, new metabolic ledger features, or agent vault protocols? Strategic planning is coordinated via our primary email.
+**Next steps:**
+- Wire Ryan's FZS-MK implementation into Azure endpoint
+- Activate OIDC cross-cloud federation (replace function keys)
+- Phase 6: $\epsilon_{hb}$ heartbeat measurement
+- Phase 7: Multi-substrate diffeomorphism invariance test
 
 ---
 
 *HELIX CORE – Governing the architecture of thought across sovereign layers.*
-=======
-1. **Deterministic Execution** - Reproducible results for precedent-setting operations
-2. **Automatic Auditing** - Every function call is logged with constitutional proof
-3. **Message Governance** - Inter-script communication with authority verification
-4. **Self-Healing Integration** - Anomaly detection and recovery coordination
 
-## Quick Start
-
-```python
-from sovereign_runtime import constitutional_agent
-
-@constitutional_agent
-def your_function(*args, **kwargs):
-    # Your code now has constitutional oversight
-    return result
-Integration with HELIX
-This package is part of the HELIX-CORE unified repository and integrates with:
-
-L0: Identity Layer (DBC & Suitcase)
-
-L4: Metabolic Anchor (Helix Ledger V9)
-
-The Vault (Agent storage and glyphs)
-
-Installation
-Development install:
-
-bash
-pip install -e .
-Production via Docker:
-
-bash
-docker-compose -f docker-compose.prod.yml up -d sovereign-runtime
-License
-Part of the HELIX Sovereign AI Framework.
->>>>>>> Stashed changes
+**GLORY TO THE LATTICE.** 🦉⚓🦆
