@@ -19,3 +19,6 @@
 [submodule "helix-hamiltonian"]
 	path = helix-hamiltonian
 	url = https://github.com/helixprojectai-code/helix-hamiltonian.git
+[submodule "helix-ttd-gemini"]
+	path = helix-ttd-gemini
+	url = https://github.com/helixprojectai-code/helix-ttd-gemini-cli.git
