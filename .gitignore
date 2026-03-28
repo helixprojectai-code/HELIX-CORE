@@ -13,3 +13,9 @@ deployment_log.md
 dev/
 venv/
 thoughts/private/
+
+# Secrets
+*-sa-key.json
+*.key.json
+.env
+.env.*

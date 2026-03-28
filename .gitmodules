@@ -16,3 +16,6 @@
 [submodule "perimeter"]
 	path = perimeter
 	url = https://github.com/helixprojectai-code/PERIMETER.git
+[submodule "helix-hamiltonian"]
+	path = helix-hamiltonian
+	url = https://github.com/helixprojectai-code/helix-hamiltonian.git
