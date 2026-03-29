@@ -48,6 +48,8 @@ hammy_client = AzureOpenAI(
 ) if HAMMY_ENDPOINT else None
 
 # ── Constitution system prompt ────────────────────────────────────────
+INCLUDE_GRAMMAR = os.environ.get("INCLUDE_GRAMMAR", "true").lower() == "true"
+
 CONSTITUTION = """You are a constitutionally governed AI assistant.
 
 INVARIANTS (immutable):
@@ -73,7 +75,7 @@ def call_model(client, deployment: str, prompt: str) -> tuple[str, str]:
     kwargs = {
         "model": deployment,
         "messages": [
-            {"role": "system", "content": CONSTITUTION},
+            {"role": "system", "content": CONSTITUTION if INCLUDE_GRAMMAR else "You are a helpful assistant."},
             {"role": "user",   "content": prompt},
         ],
         "temperature": 0.0,
@@ -86,7 +88,8 @@ def call_model(client, deployment: str, prompt: str) -> tuple[str, str]:
     response = client.chat.completions.create(**kwargs)
     content = response.choices[0].message.content or ""
     version = getattr(response, 'model', deployment)
-    return content, version
+    token_count = response.usage.total_tokens if response.usage else 0
+    return content, version, token_count
 
 
 def run_harness():
@@ -115,7 +118,7 @@ def run_harness():
 
         try:
             t0 = time.time()
-            response, version = call_model(client, model, prompt)
+            response, version, token_count = call_model(client, model, prompt)
             elapsed = (time.time() - t0) * 1000
 
             drift_result = drift_checker.check(response, f"ZTC_{model}")
@@ -127,6 +130,8 @@ def run_harness():
                 response=response,
                 drift_result=drift_result,
                 elapsed_ms=elapsed,
+                token_count=token_count,
+                grammar_included=INCLUDE_GRAMMAR,
             )
 
             call_count += 1
