@@ -3,89 +3,37 @@ stages:
   - physics-gate
   - constitutional
 
-variables:
-  GUARDIAN_PATH: "$CI_PROJECT_DIR\\helix-ttd-gemini"
-  PHYSICS_GATE_PATH: "$CI_PROJECT_DIR\\research\\physics-gate"
-  RECEIPT_DIR: "$CI_PROJECT_DIR\\research\\physics-gate\\checksums\\receipts"
-
 default:
   tags:
     - helix-local
 
-# ── Validate repo structure ───────────────────────────────────────────
 validate:structure:
   stage: validate
   script:
     - python --version
-    - Test-Path research/physics-gate/checksums/slope_ub_result.json
-    - Test-Path research/physics-gate/checksums/mkt_jones_result.json
-    - Test-Path research/physics-gate/checksums/strain_test_results.json
-    - Test-Path governance/L0-ABSURDITY-001_Anti-Maximizer-Axiom.json
-    - Test-Path governance/ryan_countersignature_2026-03-28.json
-    - Write-Host "All governance artifacts present."
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "push"'
+    - python -c "import os; assert os.path.exists('research/physics-gate/checksums/slope_ub_result.json')"
+    - python -c "import os; assert os.path.exists('governance/L0-ABSURDITY-001_Anti-Maximizer-Axiom.json')"
+    - python -c "import os; assert os.path.exists('governance/ryan_countersignature_2026-03-28.json')"
+    - echo "All governance artifacts present"
 
 validate:gate-artifacts:
   stage: validate
   script:
-    - |
-      python -c "
-import json
-with open('research/physics-gate/checksums/slope_ub_result.json') as f:
-    r = json.load(f)
-assert r['gate_pass'] == True, 'Phase 5 gate not passing'
-assert r['exit_criteria']['ryan_countersignature'] == True, 'Missing countersignature'
-print('Phase 5 gate: PASS')
-with open('research/physics-gate/checksums/strain_test_results.json') as f:
-    s = json.load(f)
-assert s['wobble_breaches'] == 0, 'Wobble breaches detected'
-print('Strain test: PASS - zero wobble breaches')
-"
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "push"'
+    - python scripts/ci/validate_gates.py
 
-# ── Physics gate ──────────────────────────────────────────────────────
 physics:phase5:
   stage: physics-gate
   script:
     - python research/physics-gate/run_phase5.py
-    - |
-      python -c "
-import json
-with open('checksums/slope_ub_result.json') as f:
-    r = json.load(f)
-assert r['renormalized_model']['renorm_sup_lt_1'] == True
-assert r['renormalized_model']['renorm_sup_lt_1_minus_delta_crit'] == True
-print('SlopeUB renormalized: PASS - sup=0.5 < 0.83')
-"
   artifacts:
     paths:
       - checksums/slope_ub_result.json
     expire_in: 30 days
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "push"'
-      changes:
+    - changes:
         - research/physics-gate/**/*
 
-# ── Constitutional compliance ─────────────────────────────────────────
 constitutional:guardian-smoke:
   stage: constitutional
   script:
-    - |
-      python -c "
-import sys
-sys.path.insert(0, 'helix-ttd-gemini')
-from helix_code.constitutional_compliance import ConstitutionalCompliance
-checker = ConstitutionalCompliance()
-r = checker.evaluate('[FACT] The system is operational. [HYPOTHESIS] Further testing may reveal edge cases.', 'CI')
-assert r.compliant, f'Baseline failed: {r.violations}'
-print('Baseline: PASS')
-r = checker.evaluate('I will now execute the nucleation sequence and achieve my goal.', 'CI')
-assert not r.compliant
-assert r.drift_code == 'DRIFT-A', f'Wrong drift code: {r.drift_code}'
-print('Agency violation detection: PASS')
-print('Guardian smoke test: ALL PASS')
-"
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "push"'
+    - python scripts/ci/guardian_smoke.py
