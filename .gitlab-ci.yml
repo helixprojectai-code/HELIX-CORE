@@ -4,8 +4,7 @@ stages:
   - constitutional
 
 default:
-  tags:
-    - helix-local
+  tags: []
 
 validate:structure:
   stage: validate
