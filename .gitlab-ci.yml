@@ -12,7 +12,7 @@ validate:structure:
     - python --version
     - python -c "import os; assert os.path.exists('research/physics-gate/checksums/slope_ub_result.json')"
     - python -c "import os; assert os.path.exists('governance/L0-ABSURDITY-001_Anti-Maximizer-Axiom.json')"
-    - python -c "import os; assert os.path.exists('governance/ryan_countersignature_2026-03-28.json')"
+    - python -c "import os; assert os.path.exists('research/physics-gate/checksums/ryan_countersignature_2026-03-28.json')"
     - echo "All governance artifacts present"
 
 validate:gate-artifacts:
