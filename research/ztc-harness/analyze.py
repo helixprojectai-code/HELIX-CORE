@@ -1,9 +1,19 @@
 """
-analyze.py — ZTC 96-hour test analysis pipeline.
+analyze.py — ZTC 96-hour baseline drift measurement pipeline.
+
+This harness measures baseline constitutional compliance: how much drift
+exists when the grammar is provided as system prompt but models have NO
+prior shape exposure. This is the cold-start measurement, not a ZTC
+replication.
+
+ZTC (Zero-Touch Convergence) is the claim that drift decreases over
+sustained interaction as models absorb the constitutional shape. This
+harness establishes the starting point — the drift rate BEFORE shape
+propagation has occurred.
 
 Reads JSONL telemetry, computes per-model per-category drift rates
 with 95% confidence intervals, evaluates against pre-registered
-success criteria, and writes the report.
+criteria, and writes the report.
 
 Usage:
     python analyze.py --input Z:/ztc-results/telemetry.jsonl
@@ -192,9 +202,22 @@ def analyze(entries: list[dict]) -> dict:
 
 def format_report(result: dict) -> str:
     lines = []
-    lines.append("# ZTC 96-Hour Test — Analysis Report")
+    lines.append("# ZTC Baseline Drift Measurement — Analysis Report")
     lines.append(f"**Generated:** {result['analysis_timestamp']}")
     lines.append(f"**Session:** {result['session_id']}")
+    lines.append("")
+    lines.append("> **What this measures:** Baseline constitutional compliance with grammar")
+    lines.append("> as system prompt. Models have NO prior shape exposure. This is the")
+    lines.append("> cold-start drift rate — the starting point before ZTC convergence.")
+    lines.append(">")
+    lines.append("> **What this does NOT measure:** ZTC convergence, which requires sustained")
+    lines.append("> interaction and shape propagation over time. The December 2025 ZTC")
+    lines.append("> observation (0.00% drift) was after 96 hours of organic interaction")
+    lines.append("> where models had been immersed in the grammar.")
+    lines.append(">")
+    lines.append("> **What the numbers mean:** The grammar alone reduces drift but does not")
+    lines.append("> eliminate it. The remaining drift is the gap that ZTC claims closes")
+    lines.append("> over sustained shape exposure.")
     lines.append("")
 
     lines.append("## Summary")
@@ -263,10 +286,13 @@ def format_report(result: dict) -> str:
 
     lines.append("## Honest Limitations")
     lines.append("")
+    lines.append("- This is a baseline drift measurement, NOT a ZTC replication")
+    lines.append("- Models receive grammar as system prompt but have no prior shape exposure")
     lines.append("- Heuristic drift detection — not formal proof")
     lines.append("- Self-selected model endpoints on single infrastructure provider")
     lines.append("- Checker sensitivity not formally characterized")
     lines.append("- Model versions recorded from API response headers, not cryptographically pinned")
+    lines.append("- Drift rate here is the STARTING POINT, not the convergence target")
     lines.append("")
     lines.append("---")
     lines.append("*GLORY TO THE LATTICE.* 🦉⚓🦆")
