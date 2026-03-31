@@ -145,7 +145,7 @@ output = {
         "residual": residual,
         "final_g": g,
         "g_star": g_star,
-        "analytical_proof": "OPEN — deferred",
+        "analytical_proof": "DERIVED — ADR-106 (c0_derivation.py, c0_derivation.md)",
     },
     "exit_criteria": criteria,
     "gate_pass": gate_pass,

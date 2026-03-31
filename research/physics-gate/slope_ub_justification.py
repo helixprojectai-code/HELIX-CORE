@@ -84,7 +84,7 @@ output = {
     "phase5_clearance": {
         "slopeub_documented": True,
         "renorm_candidate_identified": True,
-        "analytical_proof_status": "OPEN — numerical evidence only; Wetterich RG proof deferred",
+        "analytical_proof_status": "DERIVED — ADR-106 (Wetterich RG fixed point, fastest eigenvalue = π·ln(10) = naive SlopeUB)",
         "ready_for_phase5": True,
     }
 }
