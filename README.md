@@ -42,6 +42,8 @@
 | Service | Cloud | Path | Status |
 | :--- | :--- | :--- | :--- |
 | **GICD Scanner** | GCP Cloud Run | `cloud/gcp/` | ✅ Live |
+
+> **GICD Attribution:** Our GICD implementation maps to Pillars 1 (Structural Mapping) and 5 (Ethics Drift Detection) of the six-pillar GICD framework created by [Samantha L. King](https://www.linkedin.com/in/samanthalkingauthor/) (King Insights Group). Independent derivation, partial convergence. See [GICD_ATTRIBUTION.md](GICD_ATTRIBUTION.md) for full mapping.
 | **Prime-Indexed Attention Kernel** | AWS Lambda | `cloud/aws/` | ✅ Live — PiKernel, GapLB=0.225 |
 | **FZS-MK Memory Kernel** | Azure Functions | `cloud/azure/` | ✅ Live |
 
