@@ -303,12 +303,14 @@ def main():
         "convergence": conv,
         "memory_kernel": mk,
         "analysis": analysis,
-        "proof_status": "PASS" if match else "OPEN — numerical deviation",
+        "proof_status": "NUMERICALLY VERIFIED to O(10⁻⁴)" if match else "OPEN — numerical deviation",
         "note": (
             "z = ⟨2 sin²(log p)⟩_μ is the prime-weighted average of the "
             "memory kernel's oscillatory component. The value 1/(2 cos 1) "
-            "is the effective single-frequency approximation. Exact match "
-            "depends on the tail behavior of the prime-counting measure."
+            "matches to 0.04%. This is a NUMERICAL OBSERVATION, not an "
+            "analytic proof. The analytic step connecting the prime zeta "
+            "function P(1+2i) to exactly 1/(2 cos 1) remains open. "
+            "(Lessard, 2026: 'needs to be written out explicitly')."
         ),
     }
 

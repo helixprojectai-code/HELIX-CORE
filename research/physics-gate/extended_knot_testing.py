@@ -215,6 +215,93 @@ def evaluate_knot(knot_id, t=None):
     }
 
 
+def ybe_phase_analysis():
+    """
+    Yang-Baxter phase analysis (Lessard concern, 2026).
+
+    The prime-weighted R-matrix R_{p,q} = (O_p x O_q) R_std (O_p^dag x O_q^dag)
+    preserves YBE exactly (similarity transform). But the conjugation introduces
+    a phase that depends on the specific primes labelling the strands.
+
+    Question: Is this phase knot-dependent (projective representation)
+    or strand-label-dependent only (true representation up to relabelling)?
+
+    Test: Compute the phase for different prime pairs and check if it
+    factors as phi(p) * phi(q) (true rep) or has cross-terms (projective).
+    """
+    import cmath as cm
+
+    sigma_x = np.array([[0, 1], [1, 0]], dtype=complex)
+    sigma_y = np.array([[0, -1j], [1j, 0]], dtype=complex)
+    sigma_z = np.array([[1, 0], [0, -1]], dtype=complex)
+    I2 = np.eye(2, dtype=complex)
+
+    def O_p(p):
+        log_p = np.log(p)
+        inv_p = 1.0 / p
+        norm = np.sqrt(1.0 + inv_p)
+        n = np.array([np.sin(log_p), np.cos(log_p), np.sqrt(inv_p)]) / norm
+        n_dot_sigma = n[0]*sigma_x + n[1]*sigma_y + n[2]*sigma_z
+        return np.cos(log_p)*I2 + 1j*np.sin(log_p)*n_dot_sigma
+
+    q_val = np.exp(1j * np.pi / 3)
+    q_half = q_val**0.5
+    q_inv_half = q_val**(-0.5)
+
+    R_std = np.zeros((4, 4), dtype=complex)
+    R_std[0, 0] = q_half
+    R_std[1, 1] = q_half - q_inv_half
+    R_std[1, 2] = 1.0
+    R_std[2, 1] = 1.0
+    R_std[3, 3] = q_half
+
+    primes_test = [2, 3, 5, 7, 11]
+    results = []
+
+    for i, p1 in enumerate(primes_test):
+        for p2 in primes_test[i+1:]:
+            conj = np.kron(O_p(p1), O_p(p2))
+            conj_inv = np.kron(O_p(p1).conj().T, O_p(p2).conj().T)
+            R_pq = conj @ R_std @ conj_inv
+
+            # Check if R_pq = phase * R_std (true rep) or not (projective)
+            # Compute R_pq / R_std element-wise where R_std != 0
+            ratios = []
+            for row in range(4):
+                for col in range(4):
+                    if abs(R_std[row, col]) > 1e-10:
+                        ratios.append(R_pq[row, col] / R_std[row, col])
+
+            if len(ratios) > 1:
+                # Check if all ratios are the same (global phase)
+                spread = max(abs(r - ratios[0]) for r in ratios)
+                is_global_phase = spread < 1e-6
+            else:
+                is_global_phase = True
+                spread = 0.0
+
+            results.append({
+                "p1": p1, "p2": p2,
+                "ratio_spread": float(spread),
+                "is_global_phase": is_global_phase,
+            })
+
+    all_global = all(r["is_global_phase"] for r in results)
+
+    return {
+        "test": "YBE phase factorization",
+        "pairs_tested": len(results),
+        "all_global_phase": all_global,
+        "classification": "TRUE representation" if all_global else "PROJECTIVE representation",
+        "detail": results,
+        "lessard_note": (
+            "If projective, the braiding category changes from Rep(U_q(sl2)) "
+            "to ProjRep(U_q(sl2)). Markov invariance must be re-examined "
+            "in the projective setting. (Lessard, 2026)"
+        ),
+    }
+
+
 def main():
     print("=" * 70)
     print("  EXTENDED KNOT TESTING — ADR-105")
@@ -281,6 +368,18 @@ def main():
     print(f"    c = {rh['crossing_number']}, P = {rh['protection_factor_P']:.1f}")
     print(f"    Note: Link invariant — Alexander polynomial not directly comparable.")
 
+    # YBE phase analysis (Lessard concern)
+    print(f"\n  YBE Phase Analysis (Lessard, 2026):")
+    ybe = ybe_phase_analysis()
+    print(f"    Pairs tested: {ybe['pairs_tested']}")
+    print(f"    All global phase: {ybe['all_global_phase']}")
+    print(f"    Classification: {ybe['classification']}")
+    if not ybe['all_global_phase']:
+        print(f"    ⚠ Projective representation detected.")
+        print(f"      Markov invariance needs re-examination in projective setting.")
+        for r in ybe['detail'][:3]:
+            print(f"      ({r['p1']},{r['p2']}): spread={r['ratio_spread']:.6f}")
+
     # Build output
     output = {
         "version": "1.0.0",
@@ -296,6 +395,7 @@ def main():
         "knots": {k: {kk: vv for kk, vv in v.items()
                        if not callable(vv)}
                   for k, v in results.items()},
+        "ybe_phase_analysis": ybe,
         "scaling_verified": True,
     }
 

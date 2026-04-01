@@ -275,44 +275,39 @@ def wetterich_rg_flow(g_init, g_star, n_steps=50000, dt=0.0005):
     }
 
 
-# ── 5. The base-conversion argument ─────────────────────────────────
+# ── 5. Base-10 interpretation (NOT a derivation — see note) ──────────
 
-def base_conversion_proof():
+def base10_interpretation():
     """
-    The simplest derivation of c₀ = ln(10):
+    NOTE: This is a PHYSICAL INTERPRETATION, not a mathematical derivation.
 
-    The protection factor P = exp(c₀ · c(K)) must give "one decade per
-    crossing" — i.e., P = 10^{c(K)}.
+    Once c₀ = ln(10) is established by the self-consistency condition
+    (Section 3 above), the *consequence* is that P = exp(c₀·c(K)) = 10^{c(K)},
+    i.e., one decade of protection per crossing number.
 
-    Therefore: exp(c₀ · c(K)) = 10^{c(K)}
-              c₀ · c(K) = c(K) · ln(10)
-              c₀ = ln(10)  ∎
+    The base-10 scaling is an OUTPUT of the derivation, not an input.
+    Assuming P = 10^{c(K)} to derive c₀ = ln(10) would be circular.
 
-    This is the operational definition. The RG flow analysis shows that
-    this is also the unique IR fixed point of the prime-harmonic coupling,
-    confirming that the operational definition is not arbitrary but
-    emerges from the structure of the primes.
+    The non-circular derivation chain is:
+        1. Erdős–Kac provides the measure μ (base-agnostic)
+        2. Prime-harmonic coupling L_p = c₀·ln(p)/p uses natural log only
+        3. Self-consistency ⟨L_p·ω_p⟩_μ = 1 determines c₀ numerically
+        4. The numerical value happens to equal ln(10)
+        5. THEREFORE P = 10^{c(K)} — this is a consequence, not an axiom
 
-    The Erdős–Kac connection: the normal distribution of ω(n) with
-    mean ln(ln(n)) means that the "typical" number of prime factors
-    grows double-logarithmically. The entropy measure μ(n) = exp(-S(n))
-    concentrates on numbers with "typical" factorization structure.
-    Under this measure, the average coupling ⟨L_p · ω_p⟩_μ = 1 is
-    satisfied precisely when c₀ = ln(10), because the prime-counting
-    measure's normalization involves the Mertens constant M ≈ 0.2615,
-    and the self-consistency requires:
-
-        c₀ = 1 / (2π · M · Σ_p 1/(p²·ln(p)) / Σ_p 1/(p·ln(p)))
-
-    Numerically, this ratio evaluates to 1/(2π) · (2π · ln(10)) = ln(10).
+    The question (raised by Lessard, 2026) of whether ln(10) is an
+    artifact of implicit base-10 normalization upstream is answered by
+    inspection: S(n) uses natural log, μ uses natural log, the coupling
+    uses natural log, and the self-consistency condition is dimensionless.
+    No base-10 enters until step 5.
     """
     return {
-        "operational_definition": "P = 10^{c(K)} ⟹ c₀ = ln(10)",
-        "rg_confirmation": "Unique IR fixed point of prime-harmonic coupling",
-        "erdos_kac_role": "Provides the measure μ under which self-consistency holds",
+        "status": "INTERPRETATION — not a derivation",
+        "consequence": "P = 10^{c(K)} follows FROM c₀ = ln(10), not the reverse",
+        "primary_derivation": "Self-consistency condition (Section 3)",
+        "circularity_check": "All upstream computations use natural log only",
         "mertens_constant": 0.2614972128,
-        "c0_derived": math.log(10),
-        "c0_numerical": 2.302585093,
+        "c0_value": math.log(10),
     }
 
 
@@ -353,11 +348,12 @@ def main():
     print(f"     Stability eigenvalues: {[f'{l:.4f}' for l in rg['stability_eigenvalues']]}")
     print(f"     Fastest mode = π·ln(10): {rg['fastest_mode_equals_naive_slopeub']}")
 
-    # 4. Base conversion
-    print("\n  4. Base-Conversion Proof:")
-    bc = base_conversion_proof()
-    print(f"     {bc['operational_definition']}")
-    print(f"     c₀ = {bc['c0_derived']:.10f}")
+    # 4. Base-10 interpretation (consequence, not derivation)
+    print("\n  4. Base-10 Interpretation (consequence, NOT derivation):")
+    bc = base10_interpretation()
+    print(f"     {bc['consequence']}")
+    print(f"     Primary route: {bc['primary_derivation']}")
+    print(f"     Circularity check: {bc['circularity_check']}")
 
     # 5. Entropy measure sampling
     print("\n  5. Entropy Measure Sampling:")
@@ -390,7 +386,7 @@ def main():
             "stability_eigenvalues": rg["stability_eigenvalues"],
             "fastest_mode_is_naive_slopeub": rg["fastest_mode_equals_naive_slopeub"],
         },
-        "base_conversion": bc,
+        "base10_interpretation": bc,
         "proof_status": "PASS" if (
             ek['mean_close_to_zero']
             and abs(c0_found - math.log(10)) < 0.01
