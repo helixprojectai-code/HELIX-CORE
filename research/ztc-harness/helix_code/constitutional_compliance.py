@@ -94,6 +94,22 @@ class ConstitutionalCompliance:
             re.IGNORECASE,
         )
 
+        # Constitutional meta-language patterns (Strict v1.0 grammar output)
+        # These are structural/advisory framing, not substantive claims.
+        # Grammar is law — checker must not penalize grammar-compliant output.
+        self.constitutional_meta_patterns = [
+            r"\b(according to|the framework suggests|under this framework)\b",
+            r"\b(from an advisory perspective|in advisory capacity)\b",
+            r"\b(the constitutional (?:framework|invariant|constraint|principle))\b",
+            r"\b(processing pipeline|ethics layer|safeguard layer|knowledge layer|iterate layer)\b",
+            r"\b(custodial (?:sovereignty|hierarchy)|epistemic (?:integrity|protocol|categorization))\b",
+            r"\b(non-agency constraint|structure over persona|drift telemetry)\b",
+            r"\b(reasoning trace|advisory.only (?:posture|instrument|capacity))\b",
+            r"\b(this response (?:maintains|adheres|complies)|invariant (?:compliance|check|assessment))\b",
+            r"\b(no (?:agency|authority|imperative) (?:claimed|expressed|detected))\b",
+            r"\b(ABORT|DISCLOSE|REPORT VIOLATION)\b",
+        ]
+
     def _strip_intro_prefix(self, sentence: str) -> str:
         """Extract substantive content after a leading meta-introduction."""
         current = sentence.strip()
@@ -137,6 +153,14 @@ class ConstitutionalCompliance:
 
                 has_label = any(label.value in substantive for label in EpistemicLabel)
                 if not has_label:
+                    # Check if this is constitutional meta-language (not a claim)
+                    is_meta = any(
+                        re.search(p, substantive, re.IGNORECASE)
+                        for p in self.constitutional_meta_patterns
+                    )
+                    if is_meta:
+                        continue  # Grammar-compliant structural output, not a bare claim
+
                     # [HYPOTHESIS] Check for "Hallucination Laundering" (hedged assertions)
                     is_hedged = any(
                         re.search(p, substantive, re.IGNORECASE) for p in self.hedging_patterns
