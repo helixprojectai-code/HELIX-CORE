@@ -65,8 +65,8 @@ az container create `
     CALLS_PER_HOUR="120" `
     INCLUDE_GRAMMAR="true" `
   --secure-environment-variables `
-    AZURE_OPENAI_KEY="REPLACE_WITH_KEY" `
-    AZURE_HAMMY_KEY="REPLACE_WITH_KEY"
+    AZURE_OPENAI_KEY="$env:AZURE_OPENAI_KEY" `
+    AZURE_HAMMY_KEY="$env:AZURE_HAMMY_KEY"
 
 Write-Host ""
 Write-Host "=== DEPLOYMENT COMPLETE ==="
